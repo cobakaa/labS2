@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#TEX files
+*.gz
+*.aux
+*.log
+
+l20/config.sh
