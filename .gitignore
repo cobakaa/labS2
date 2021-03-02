@@ -57,3 +57,12 @@ dkms.conf
 *.log
 
 l20/config.sh
+.idea
+.vscode
+CMakeLists.txt
+a.out
+build
+cmake-build-debug
+*report*
+cmake*
+
