@@ -1,0 +1,345 @@
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1360]
+└─[$] speedtest >> file1.txt                                                                                 [18:05:07]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1361]
+└─[$] speedtest >> file2.txt                                                                                 [18:08:01]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1362]
+└─[$] cat file1.txt file2.txt                                                                                [18:08:33]
+
+   Speedtest by Ookla
+
+     Server: i3D.net - Moscow (id = 22103)
+        ISP: The Academy of the Ministry of Education of the Ru
+    Latency:     4.81 ms   (9.24 ms jitter)
+   Download:    40.49 Mbps (data used: 54.4 MB)
+     Upload:    18.33 Mbps (data used: 27.8 MB)
+Packet Loss:     0.0%
+ Result URL: https://www.speedtest.net/result/c/5e2251e9-aae3-469e-a8e9-47f7ef5e9b06
+
+   Speedtest by Ookla
+
+     Server: i3D.net - Moscow (id = 22103)
+        ISP: The Academy of the Ministry of Education of the Ru
+    Latency:     5.06 ms   (1.49 ms jitter)
+   Download:    40.14 Mbps (data used: 56.3 MB)
+     Upload:    18.14 Mbps (data used: 26.6 MB)
+Packet Loss:     0.0%
+ Result URL: https://www.speedtest.net/result/c/f9e4d11c-23bb-4caa-930f-7a4f5570f6e7
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1363]
+└─[$] cmp file1.txt file2.txt                                                                                [18:12:44]
+file1.txt file2.txt differ: byte 149, line 6
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1364]
+└─[$] cmp -l file1.txt file2.txt                                                                             [18:13:38]
+149  64  65
+151  70  60
+152  61  66
+160  71  61
+162  62  64
+163  64  71
+196  64  61
+197  71  64
+217  64  66
+219  64  63
+276  63  61
+277  63  64
+297  67  66
+299  70  66
+406  65 146
+407 145  71
+408  62 145
+409  62  64
+410  65 144
+412 145  61
+413  71 143
+415 141  62
+416 141  63
+417 145 142
+418  63 142
+421  66 143
+422  71 141
+423 145 141
+425 141  71
+426  70  63
+427 145  60
+428  71 146
+430  64  67
+431  67 141
+432 146  64
+433  67 146
+434 145  65
+435 146  65
+436  65  67
+437 145  60
+438  71 146
+439 142  66
+440  60 145
+441  66  67
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1365]
+└─[$] cp file1.txt file1_copy.txt                                                                            [18:13:48]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1366]
+└─[$] diff file1.txt file1_copy.txt                                                                          [18:15:40]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1367]
+└─[$] diff file1.txt file2.txt                                                                               [18:15:54]
+6,8c6,8
+<     Latency:     4.81 ms   (9.24 ms jitter)
+   Download:    40.49 Mbps (data used: 54.4 MB)
+     Upload:    18.33 Mbps (data used: 27.8 MB)
+---
+>     Latency:     5.06 ms   (1.49 ms jitter)
+   Download:    40.14 Mbps (data used: 56.3 MB)
+     Upload:    18.14 Mbps (data used: 26.6 MB)
+10c10
+<  Result URL: https://www.speedtest.net/result/c/5e2251e9-aae3-469e-a8e9-47f7ef5e9b06
+---
+>  Result URL: https://www.speedtest.net/result/c/f9e4d11c-23bb-4caa-930f-7a4f5570f6e7
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1427]
+└─[$] ../twitch-follows.sh | awk 'FNR>4 {if ($1 != "") print $1}' | sort > 4m0xa.txt                          [1:04:22]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1428]
+└─[$] cat 4m0xa.txt                                                                                           [1:04:49]
+ALOHADANCETV
+Abver
+GMHikaru
+Nixjke
+R1FMABES2tipa
+Sh4dowehhh
+melharucos
+meowsonic
+santadoto
+wuhek
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1429]
+└─[$] ../twitch-follows.sh sh4dowehhh | awk 'FNR>4 {if ($1 != "") print $1}' | sort > sh4dowehhh.txt          [1:04:58]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1430]
+└─[$] cat sh4dowehhh.txt                                                                                      [1:05:10]
+ALOHADANCETV
+Arise_3012
+BeyondTheSummit
+Dota2RuHub
+Ghostik
+Kingrdoto
+Nixjke
+Olsior
+Yanulya27
+bafik
+dota2mc_ru2
+kamikpro
+meowsonic
+mira
+s1mple
+ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1431]
+└─[$] comm 4m0xa.txt sh4dowehhh.txt -3                                                                        [1:05:18]
+Abver
+        Arise_3012
+        BeyondTheSummit
+        Dota2RuHub
+GMHikaru
+        Ghostik
+        Kingrdoto
+        Olsior
+R1FMABES2tipa
+Sh4dowehhh
+        Yanulya27
+        bafik
+        dota2mc_ru2
+        kamikpro
+melharucos
+        mira
+        s1mple
+santadoto
+wuhek
+        ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1432]
+└─[$] comm 4m0xa.txt sh4dowehhh.txt -12 | wc                                                                  [1:05:28]
+      3       3      30
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1433]
+└─[$] comm 4m0xa.txt sh4dowehhh.txt -12 | wc -w                                                               [1:05:35]
+3
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1434]
+└─[$] dd if=netflix_titles.csv of=netflix_titles_copy.csv bs=1b count=2 conv=noerror                          [1:05:39]
+2+0 records in
+2+0 records out
+1024 bytes (1.0 kB, 1.0 KiB) copied, 0.0037847 s, 271 kB/s
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1435]
+└─[$] cat netflix_titles_copy.csv                                                                             [1:05:56]
+show_id,type,title,director,cast,country,date_added,release_year,rating,duration,listed_in,
+descriptions1,TV Show,3%,,"João Miguel, Bianca Comparato, Michel Gomes, Rodolfo Valente, 
+Vaneza Oliveira, Rafael Lozano, Viviane Porto, Mel Fronckowiak, Sergio Mamberti, Zezé Motta, 
+Celso Frateschi",Brazil,"August 14, 2020",2020,TV-MA,4 Seasons,"International TV Shows, 
+TV Dramas, TV Sci-Fi & Fantasy","In a future where the elite inhabit an island paradise 
+far from the crowded slums, you get one chance to join the 3% saved from squalor."s2,Movie,
+7:19,Jorge Michel Grau,"Demián Bichir, Héctor Bonilla, Oscar Serrano, Azalia Ortiz, 
+Octavio Michel, Carmen Beato",Mexico,"December 23, 2016",2016,TV-MA,93 min,"Dramas, 
+International Movies","After a devastating earthquake hits Mexico City, trapped survivors 
+from all walks of life wait to be rescued while trying desperately to stay alive." s3,Movie,
+23:59,Gilbert Chan,"Tedd Chan, Stella Chung, Henley Hii, Lawrence Koh, Tommy Kuan, Josh Lai, 
+Mark Lee, Susan Leong, Benjamin
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1481]
+└─[$] cat 4m0xa.txt | awk '{printf "%s %s\n", NR, $0}' > 4m0xa.txt                                            [1:25:08]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1482]
+└─[$] cat sh4dowehhh.txt | awk '{printf "%s %s\n", NR, $0}' > sh4dowehhh.txt                                  [1:25:13]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1483]
+└─[$] cat 4m0xa.txt                                                                                           [1:25:29]
+1 ALOHADANCETV
+2 Abver
+3 GMHikaru
+4 Nixjke
+5 R1FMABES2tipa
+6 Sh4dowehhh
+7 melharucos
+8 meowsonic
+9 santadoto
+10 wuhek
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1484]
+└─[$] cat sh4dowehhh.txt                                                                                      [1:25:56]
+1 ALOHADANCETV
+2 Arise_3012
+3 BeyondTheSummit
+4 Dota2RuHub
+5 Ghostik
+6 Kingrdoto
+7 Nixjke
+8 Olsior
+9 Yanulya27
+10 bafik
+11 dota2mc_ru2
+12 kamikpro
+13 meowsonic
+14 mira
+15 s1mple
+16 ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1486]
+└─[$] join 4m0xa.txt sh4dowehhh.txt                                                                           [1:26:12]
+1 ALOHADANCETV ALOHADANCETV
+2 Abver Arise_3012
+3 GMHikaru BeyondTheSummit
+4 Nixjke Dota2RuHub
+5 R1FMABES2tipa Ghostik
+6 Sh4dowehhh Kingrdoto
+7 melharucos Nixjke
+8 meowsonic Olsior
+9 santadoto Yanulya27
+10 wuhek bafik                                                                                   [1:26:17]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1488]
+└─[$] tail -n 5 sh4dowehhh.txt -v                                                                             [1:28:40]
+==> sh4dowehhh.txt <==
+12 kamikpro
+13 meowsonic
+14 mira
+15 s1mple
+16 ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1490]
+└─[$] tail 4m0xa.txt sh4dowehhh.txt                                                                           [1:30:54]
+==> 4m0xa.txt <==
+1 ALOHADANCETV
+2 Abver
+3 GMHikaru
+4 Nixjke
+5 R1FMABES2tipa
+6 Sh4dowehhh
+7 melharucos
+8 meowsonic
+9 santadoto
+10 wuhek
+
+
+==> sh4dowehhh.txt <==
+7 Nixjke
+8 Olsior
+9 Yanulya27
+10 bafik
+11 dota2mc_ru2
+12 kamikpro
+13 meowsonic
+14 mira
+15 s1mple
+16 ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1490]
+└─[$] ls | tee out.txt | wc -lcw                                                                              [1:31:05]
+      7       7     103
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1492]
+└─[$] cat out.txt                                                                                             [1:32:50]
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+netflix_titles.csv
+netflix_titles_copy.csv
+sh4dowehhh.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1532]
+└─[$] cat 4m0xa.txt sh4dowehhh.txt | awk '{print $NF}' | sort | uniq -D                                       [1:49:45]
+ALOHADANCETV
+ALOHADANCETV
+Nixjke
+Nixjke
+meowsonic
+meowsonic
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1533]
+└─[$] cat 4m0xa.txt sh4dowehhh.txt | awk '{print $NF}' | sort | uniq -u                                       [1:49:49]
+Abver
+Arise_3012
+BeyondTheSummit
+Dota2RuHub
+GMHikaru
+Ghostik
+Kingrdoto
+Olsior
+R1FMABES2tipa
+Sh4dowehhh
+Yanulya27
+bafik
+dota2mc_ru2
+kamikpro
+melharucos
+mira
+s1mple
+santadoto
+wuhek
+ybicanoooobov
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1534]
+└─[$] cat 4m0xa.txt sh4dowehhh.txt | awk '{print $NF}' | sort | uniq -d                                       [1:49:53]
+ALOHADANCETV
+Nixjke
+meowsonic
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1535]
+└─[$] od -c -                                                                                                 [1:49:56]
+100 wqe asd
+qop
+0000000   1   0   0       w   q   e       a   s   d  \n   q   o   p  \n
+
+0000020  \n
+0000021
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1536]
+└─[$] od -b -                                                                                                 [1:55:56]
+213 asd qwe power
+0000000 062 061 063 040 141 163 144 040 161 167 145 040 160 157 167 145
+0000020 162 012
+0000022
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1539]
+└─[$] sum -r 4m0xa.txt                                                                                        [1:58:03]
+01698     1                                                                                               [1:58:08]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1541]
+└─[$] sum -s 4m0xa.txt                                                                                        [1:58:24]
+9340 1 4m0xa.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1544]
+└─[$] cat 4m0xa.txt | cut -d ' ' -f 2                                                                         [1:58:54]
+ALOHADANCETV
+Abver
+GMHikaru
+Nixjke
+R1FMABES2tipa
+Sh4dowehhh
+melharucos
+meowsonic
+santadoto
+wuhek
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1545]
+└─[$] cat 4m0xa.txt | cut -d ' ' -f 1                                                                         [2:00:17]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10

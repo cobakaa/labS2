@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source config.sh # tokens
+
+ABSOLUTE_FILENAME=`readlink -e "$0"`
+DIRECTORY=`dirname "$ABSOLUTE_FILENAME"`
+source $DIRECTORY/config.sh # tokens
 
 if [ -n "$1" ]
 then

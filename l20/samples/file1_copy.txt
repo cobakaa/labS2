@@ -1,0 +1,10 @@
+
+   Speedtest by Ookla
+
+     Server: i3D.net - Moscow (id = 22103)
+        ISP: The Academy of the Ministry of Education of the Ru
+    Latency:     4.81 ms   (9.24 ms jitter)
+   Download:    40.49 Mbps (data used: 54.4 MB)                               
+     Upload:    18.33 Mbps (data used: 27.8 MB)                               
+Packet Loss:     0.0%
+ Result URL: https://www.speedtest.net/result/c/5e2251e9-aae3-469e-a8e9-47f7ef5e9b06

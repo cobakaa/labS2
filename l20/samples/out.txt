@@ -1,0 +1,7 @@
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+netflix_titles.csv
+netflix_titles_copy.csv
+sh4dowehhh.txt
