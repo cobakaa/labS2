@@ -315,7 +315,7 @@ qop
 0000022
 ┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1539]
 └─[$] sum -r 4m0xa.txt                                                                                        [1:58:03]
-01698     1                                                                                               [1:58:08]
+01698     1                                                                        	                      [1:58:08]
 ┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1541]
 └─[$] sum -s 4m0xa.txt                                                                                        [1:58:24]
 9340 1 4m0xa.txt
@@ -343,3 +343,189 @@ wuhek
 8
 9
 10
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1567]
+└─[$] tar --totals --create --verbose --file archive1.tar 4m0xa.txt file*.txt                                [11:24:40]
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+Total bytes written: 10240 (10KiB, 572KiB/s)
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1568]
+└─[$] tar --totals --create --verbose --file archive2.tar sh4dowehhh.txt file*.txt                           [11:25:55]
+sh4dowehhh.txt
+file1.txt
+file1_copy.txt
+file2.txt
+Total bytes written: 10240 (10KiB, 497KiB/s)
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1569]
+└─[$] tar -tf archive1.tar                                                                                   [11:27:04]
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1570]
+└─[$] tar -tf archive2.tar                                                                                   [11:27:36]
+sh4dowehhh.txt
+file1.txt
+file1_copy.txt
+file2.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1577]
+└─[$] tar --diff -f archive1.tar file*                                                                       [11:30:52]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1578]
+└─[$] tar --diff -f archive1.tar *.txt                                                                       [11:31:42]
+tar: out.txt: Not found in archive
+tar: sh4dowehhh.txt: Not found in archive
+tar: Exiting with failure status due to previous errors
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1579]
+└─[$] tar -tf archive1.tar                                                                                   [11:32:01]
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1583]
+└─[$] mkdir tar                                                                                              [11:34:23]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1584]
+└─[$] tar -C "tar" -xvf archive1.tar                                                                         [11:34:29]
+4m0xa.txt
+file1.txt
+file1_copy.txt
+file2.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1586]
+└─[$] ls tar                                                                                                 [11:34:35]
+4m0xa.txt  file1.txt  file1_copy.txt  file2.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1592]
+└─[$] gzip -c archive1.tar > archive1.tar.gz                                                     [15:07:40]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1595]
+└─[$] ls *.gz                                                                                    [18:17:43]
+archive1.tar.gz
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1596]
+└─[$] gzip -d archive1.tar.gz                                                                    [18:17:52]
+gzip: archive1.tar already exists; do you wish to overwrite (y or n)? y
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1597]
+└─[$] ls                                                                                         [18:18:19]
+4m0xa.txt     archive2.tar  file1_copy.txt  netflix_titles.csv       out.txt         tar
+archive1.tar  file1.txt     file2.txt       netflix_titles_copy.csv  sh4dowehhh.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1598]
+└─[$] head -n 3 4m0xa.txt                                                                        [18:18:22]
+1 ALOHADANCETV
+2 Abver
+3 GMHikaru
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1599]
+└─[$] iconv -f cp1251 -t utf8 sh4dowehhh.txt > sh4dowehhh.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1606]
+└─[$] du -a -B K --time .                                                                        [18:28:46]
+4K      2021-03-04 18:28        ./4m0xa.txt
+0K      2021-03-04 18:28        ./4m0xa_copy.txt
+12K     2021-03-04 18:17        ./archive1.tar
+12K     2021-03-04 11:27        ./archive2.tar
+0K      2021-03-02 18:08        ./file1.txt
+0K      2021-03-02 18:15        ./file1_copy.txt
+0K      2021-03-03 01:47        ./file2.txt
+2932K   2021-03-02 18:18        ./netflix_titles.csv
+4K      2021-03-03 01:05        ./netflix_titles_copy.csv
+0K      2021-03-03 01:32        ./out.txt
+0K      2021-03-04 18:27        ./sh4dowehhh.txt
+0K      2021-03-03 01:25        ./tar/4m0xa.txt
+0K      2021-03-02 18:08        ./tar/file1.txt
+0K      2021-03-02 18:15        ./tar/file1_copy.txt
+0K      2021-03-03 01:47        ./tar/file2.txt
+0K      2021-03-04 11:34        ./tar
+2964K   2021-03-04 18:28        .
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1611]
+└─[$]  touch -c -t 01261036 4m0xa.txt                                                            [18:37:38]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1613]
+└─[$] ls -l 4m0xa.txt                                                                            [18:41:04]
+-rwxr--r-- 1 kyastakhov kyastakhov 118 Jan 26 10:36 4m0xa.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1613]
+└─[$] file -i ../twitch-follows.sh                                                               [18:41:11]
+../twitch-follows.sh: text/x-shellscript; charset=us-ascii
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1614]
+└─[$] touch -r 4m0xa.txt 4m0xa_copy.txt                                                          [18:41:48]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1615]
+└─[$] ls -l 4m0xa*                                                                               [18:42:34]
+-rwxr--r-- 1 kyastakhov kyastakhov 118 Jan 26 10:36 4m0xa.txt
+-rwxr--r-- 1 kyastakhov kyastakhov 118 Jan 26 10:36 4m0xa_copy.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1616]
+└─[$] find .. -name "4m0xa*"                                                                     [18:42:42]
+../samples/4m0xa.txt
+../samples/4m0xa_copy.txt
+../samples/tar/4m0xa.txt
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1617]
+└─[$] find .. -not -name "*.txt"                                                                 [18:44:19]
+..
+../config.sh
+../lab20_report.aux
+../lab20_report.log
+../lab20_report.out
+../lab20_report.pdf
+../lab20_report.synctex.gz
+../lab20_report.tex
+../samples
+../samples/archive1.tar
+../samples/archive2.tar
+../samples/netflix_titles.csv
+../samples/netflix_titles_copy.csv
+../samples/tar
+../twitch-follows.sh
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1619]
+└─[$]  find /mnt/d/Downloads -size +50M -size -100M                                              [18:45:58]
+/mnt/d/Downloads/DiscordSetup.exe
+/mnt/d/Downloads/FoxitReader832_L10N_Setup_Prom.exe
+/mnt/d/Downloads/jre-8u271-windows-x64.exe
+/mnt/d/Downloads/Neyronnye_seti_i_glubokoe_obuchenie_2020_Charu_Aggarval.pdf
+/mnt/d/Downloads/VSCodeUserSetup-x64-1.52.1.exe
+/mnt/d/Downloads/wxMSW-3.1.4-Setup (1).exe
+/mnt/d/Downloads/wxMSW-3.1.4-Setup.exe
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1619]
+└─[$] find /mnt/d/Downloads -name "*setup*.exe" -type f -print0 | xargs -t -0 -L1 echo           [18:49:51]
+echo /mnt/d/Downloads/mingw-get-setup.exe
+/mnt/d/Downloads/mingw-get-setup.exe
+echo /mnt/d/Downloads/tsetup.2.5.1.exe
+/mnt/d/Downloads/tsetup.2.5.1.exe
+echo /mnt/d/Downloads/Xming-6-9-0-31-setup.exe
+/mnt/d/Downloads/Xming-6-9-0-31-setup.exe
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1621]
+└─[$] df -h                                                                                      [18:51:56]
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb        251G   14G  225G   6% /
+tmpfs           6.2G     0  6.2G   0% /mnt/wsl
+tools           223G  193G   31G  87% /init
+none            6.2G     0  6.2G   0% /dev
+none            6.2G   12K  6.2G   1% /run
+none            6.2G     0  6.2G   0% /run/lock
+none            6.2G     0  6.2G   0% /run/shm
+none            6.2G     0  6.2G   0% /run/user
+tmpfs           6.2G     0  6.2G   0% /sys/fs/cgroup
+C:\             223G  193G   31G  87% /mnt/c
+D:\             931G  4.0G  927G   1% /mnt/d
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1660]
+└─[$] paste -d : file1.txt file2.txt | nl                                                                    [19:04:56]
+     1  :
+     2     Speedtest by Ookla:
+     3  :
+     4       Server: i3D.net - Moscow (id = 22103):
+     5          ISP: The Academy of the Ministry of Education of the Ru:
+     6      Latency:     4.81 ms   (9.24 ms jitter):
+   Download:    40.49 Mbps (data used: 54.4 MB)                               :
+     Upload:    18.33 Mbps (data used: 27.8 MB)                               :
+     9  Packet Loss:     0.0%:
+    10   Result URL: https://www.speedtest.net/result/c/5e2251e9-aae3-469e-a8e9-47f7ef5e9b06:
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1626]
+└─[$] split -b 1K 4m0xa.txt                                                                      [18:54:19]
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1666]
+└─[$] ls                                                                                         [19:08:30]
+4m0xa.txt       archive2.tar    file2.txt                out.txt         xaa
+4m0xa_copy.txt  file1.txt       netflix_titles.csv       sh4dowehhh.txt
+archive1.tar    file1_copy.txt  netflix_titles_copy.csv  tar
+┌─[kyastakhov@DESKTOP-U5O0R0K] - [/mnt/c/Users/nat70/CLionProjects/labS2/l20/samples] - [1667]
+└─[$] cat xaa                                                                                    [19:08:31]
+1 ALOHADANCETV
+2 Abver
+3 GMHikaru
+4 Nixjke
+5 R1FMABES2tipa
+6 Sh4dowehhh
+7 melharucos
+8 meowsonic
+9 santadoto
+10 wuhek
