@@ -29,8 +29,6 @@ all_ids=""
 page=0
 live_ids=`mktemp`
 
-# echo $data
-
 
 echo -n -e "Getting channel follows... \t"
 while [[ "$cursor" != "" || "$page" -eq 0 ]]
@@ -56,13 +54,6 @@ done
 echo "Done"
 
 echo -n -e "Total channels:\t";  echo "$all_ids" | wc -w
-
-
-# echo $all_ids
-
-# echo $all_logins
-# live_ids=""
-
 
 echo -n -e "Getting live channels... \t"
 
@@ -94,12 +85,10 @@ done
 wait
 
 echo -e "Done\n"
-# printf $live_ids
-# live_ids=`echo -e $live_ids | awk '{ print $NF, $0 }' | sort -n -k1 -r | sed 's/^[0-9][0-9]* //'`
+
 cat $live_ids | awk '{print $NF,$0}' | sort -n -k1 -r | awk '{$1="";print $0 }'
 
 echo ""
 rm $live_ids
 
 exit 0
-# echo $live_ids
