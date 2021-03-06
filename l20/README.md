@@ -1,4 +1,4 @@
-The script requires a file "config.sh" to work.
+The script requires a file **config.sh** to work.
 
 # config.sh
 ```bash
