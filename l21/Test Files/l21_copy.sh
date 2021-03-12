@@ -2,7 +2,6 @@
 
 file=""
 dir=""
-mode=false
 
 while [ -n "$1" ] 
 do
@@ -34,11 +33,6 @@ case "$1" in
 		exit 2
 	fi
 	;;
-
--y)
-	mode=false
-	;;
-
 --) 
 
 	shift
@@ -59,7 +53,7 @@ case "$1" in
 	fi
 	;;
 esac
-
+# echo "$1 $file $dir"
 shift
 done
 
@@ -74,6 +68,9 @@ if [ -z $dir ]
 then
 	dir="."
 fi
+
+# files=()
+
 
 files=()
 
@@ -90,6 +87,13 @@ else
 	done < <(find $dir -name "*.$file" -type f -print0 2> /dev/null)
 fi
 
+# for f in ${files[@]}
+# do
+# 	echo $f
+# done
+
+# echo "${files[@]}"
+
 to_delete=()
 
 for f in "${files[@]}"
@@ -100,37 +104,6 @@ do
 	fi
 done
 
-echo "Files to delete:"
-
-for i in ${!to_delete[@]}
-do
-	echo " ${to_delete[$i]}"
-
-done
-
-echo ""
-echo -n "$0: Remove files? (Y/n): "
-
-if [ "$mode" = true ]
-then
-	answer="y"
-else
-	read answer
-fi
-
-if [ `echo $answer | awk '{print tolower($0)}'` = "y" ]
-then
-
-	rm -f ${to_delete[@]}
-	echo "Files deleted."
-
-elif [ `echo $answer | awk '{print tolower($0)}'` = "n" ] 
-then
-	echo "Files not deleted."
-else
-
-	echo "Wrong answer."
-
-fi
+echo ${to_delete[@]}
 
 exit 0
