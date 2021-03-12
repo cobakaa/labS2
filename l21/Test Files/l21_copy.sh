@@ -10,7 +10,7 @@ case "$1" in
 	set -x 
 	;;
 --info) 
-		printf "\nNAME\n\t"$0" --  Compare the specified file with all other files that have the same suffix, and delete the matching files. \n\nSYNOPSIS\n\t"$0" [PARAMETERS] [FILE]\n\nDESCRIPTION\n\n\tProgramm checks all files in directory and in all subderictotries. If the suffix and the content of the input file match, it will be deleted.\n\n\t-v\tenable trace mode\n\t--info\tShows help (this menu) and exits\n\t-d\tSet directory for processing.\n\n"
+		printf "\nNAME\n\t"$0" --  Compare the specified file with all other files that have the same suffix, and delete the matching files. \n\nSYNOPSIS\n\t"$0" [PARAMETERS] [FILE]\n\nDESCRIPTION\n\n\tProgramm checks all files in directory and in all subderictotries. If the suffix and the content of the input file match, it will be deleted.\n\n\t-v\tEnable trace mode\n\t--info\tShows help (this menu) and exits\n\t-d\tSet directory for processing.\n\t-f\tSet file for processing.\n\t-d\tSet directory for processing.\n\n"
 		exit 0
 		;;
 -d)

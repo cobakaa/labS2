@@ -11,11 +11,11 @@ case "$1" in
 	set -x 
 	;;
 --info) 
-		printf "\nNAME\n\t"$0" --  Compare the specified file with all other files that have the same suffix, and delete the matching files. \n\nSYNOPSIS\n\t"$0" [PARAMETERS] [FILE]\n\nDESCRIPTION\n\n\tProgramm checks all files in directory and in all subderictotries. If the suffix and the content of the input file match, it will be deleted.\n\n\t-v\tenable trace mode\n\t--info\tShows help (this menu) and exits\n\t-d\tSet directory for processing.\n\n"
+		printf "\nNAME\n\t"$0" --  Compare the specified file with all other files that have the same suffix, and delete the matching files. \n\nSYNOPSIS\n\t"$0" [PARAMETERS] [FILE]\n\nDESCRIPTION\n\n\tProgramm checks all files in directory and in all subderictotries. If the suffix and the content of the input file match, it will be deleted.\n\n\t-v\tEnable trace mode\n\t--info\tShows help (this menu) and exits\n\t-d\tSet directory for processing.\n\t-f\tSet file for processing.\n\t-y\tAccept removing files.\n\n"
 		exit 0
 		;;
 -d)
-	if [ -d $2 ]
+	if [[ -d $2 ]]
 	then
 		dir="$2"
 		shift
@@ -25,7 +25,7 @@ case "$1" in
 	fi
 	;;
 -f)
-	if [ -f $2 ] && [ -z $file ]
+	if [[ -f $2 ]] && [ -z $file ]
 	then
 		file="$2"
 		shift
@@ -36,7 +36,7 @@ case "$1" in
 	;;
 
 -y)
-	mode=false
+	mode=true
 	;;
 
 --) 
@@ -49,7 +49,7 @@ case "$1" in
 	exit 1
 	;;
 *)
-	if [ -f $1 ] && [ -z $file ]
+	if [[ -f $1 ]] && [ -z $file ]
 	then 
 		file="$1"
 		# shift
@@ -65,12 +65,12 @@ done
 
 suff=`echo "${file##*.}"`
 
-if [ $file = $suff ]
+if [ "$file" = "$suff" ]
 then
 	suff=""
 fi
 
-if [ -z $dir ]
+if [[ -z $dir ]]
 then
 	dir="."
 fi
@@ -109,12 +109,11 @@ do
 done
 
 echo ""
-echo -n "$0: Remove files? (Y/n): "
-
-if [ "$mode" = true ]
+if [ "$mode" = "true" ]
 then
 	answer="y"
 else
+	echo -n "$0: Remove files? (Y/n): "
 	read answer
 fi
 

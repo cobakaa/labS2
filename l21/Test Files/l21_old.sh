@@ -27,7 +27,7 @@ do
 			exit 2
 		fi
 	fi
-done
+idone
 if [[ $pr == "" ]]
 then
 	pr="."
