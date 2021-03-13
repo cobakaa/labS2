@@ -2,15 +2,15 @@
 
 file=""
 dir=""
-mode=false
+modey=false
 
-while [ -n "$1" ] 
+while [ -n "$1" ]
 do
-case "$1" in 
--v) 
-	set -x 
+case "$1" in
+-v)
+	set -x
 	;;
---info) 
+--info)
 		printf "\nNAME\n\t"$0" --  Compare the specified file with all other files that have the same suffix, and delete the matching files. \n\nSYNOPSIS\n\t"$0" [PARAMETERS] [FILE]\n\nDESCRIPTION\n\n\tProgramm checks all files in directory and in all subderictotries. If the suffix and the content of the input file match, it will be deleted.\n\n\t-v\tEnable trace mode\n\t--info\tShows help (this menu) and exits\n\t-d\tSet directory for processing.\n\t-f\tSet file for processing.\n\t-y\tAuto accept removing files.\n\n"
 		exit 0
 		;;
@@ -36,21 +36,21 @@ case "$1" in
 	;;
 
 -y)
-	mode=true
+	modey=true
 	;;
 
---) 
+--)
 
 	shift
-	break 
+	break
 	;;
--*) 
+-*)
 	echo "Incorrect values. Type --info for usage info."
 	exit 1
 	;;
 *)
 	if [[ -f $1 ]] && [ -z $file ]
-	then 
+	then
 		file="$1"
 		# shift
 	else
@@ -84,17 +84,18 @@ fi
 
 files=()
 
-if [ -n $suff ]
+if [[ $suff != "" ]]
 then
 	while IFS=  read -r -d $'\0'
 	do
     	files+=("$REPLY")
 	done < <(find $dir -name "*.$suff" -type f -print0 2> /dev/null)
-else 
+else
 	while IFS=  read -r -d $'\0'
 	do
+		# echo "$REPLY"
     	files+=("$REPLY")
-	done < <(find $dir -name "*.$file" -type f -print0 2> /dev/null)
+	done < <(find $dir -not -name "*.*" -type f -print0 2> /dev/null)
 fi
 
 to_delete=()
@@ -122,7 +123,7 @@ do
 done
 
 echo ""
-if [ "$mode" = "true" ]
+if [ "$modey" = "true" ]
 then
 	answer="y"
 else
@@ -136,7 +137,7 @@ then
 	rm -f ${to_delete[@]}
 	echo "Files deleted."
 
-elif [ `echo $answer | awk '{print tolower($0)}'` = "n" ] 
+elif [ `echo $answer | awk '{print tolower($0)}'` = "n" ]
 then
 	echo "Files not deleted."
 else
