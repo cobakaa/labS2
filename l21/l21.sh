@@ -22,7 +22,7 @@ case "$1" in
 	else
 		echo "Directory \"$2\" doesn't exists."
 		exit 2
-	fi
+	fш
 	;;
 -f)
 	if [[ -f $2 ]] && [ -z $file ]
