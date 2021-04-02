@@ -1,0 +1,101 @@
+\documentclass[a4paper]{article}
+\usepackage[left=25mm, right=10mm, bottom=10mm, nohead, nofoot]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{calc}
+\usepackage{setspace}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{tikz} 
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[strict]{changepage}
+\usepackage[14pt]{extsizes}
+\usepackage[absolute]{textpos}
+\usepackage{libertine}
+
+
+\linespread{0.9}
+\topmargin=-1cm
+\oddsidemargin=30pt
+\evensidemargin=30pt
+\textheight=23cm
+\textwidth=13.8cm
+
+\usepackage{sectsty}
+
+\sectionfont{\fontsize{15}{15}\selectfont}
+
+
+
+\newcommand{\RomanNumeralCaps}[1]
+{\MakeUppercase{\romannumeral #1}}
+
+\makeatletter
+\renewcommand{\@oddfoot}{\hfil
+	\begin{tikzpicture}
+		\draw[thick] (0,0) -- (2.4,0)  +(-1.3,-0.75) node[above] {\textit{ \arabic{page}}};
+	\end{tikzpicture}
+\hfil}
+\renewcommand{\@evenfoot}{\hfil 	
+	\begin{tikzpicture}
+		\draw[thick] (0,0) -- (2.4,0)  +(-1.3,-0.75) node[above] {\textit{ \arabic{page}}};
+	\end{tikzpicture}
+\hfil}
+\makeatother
+
+\setcounter{page}{39}
+
+
+\renewcommand{\rmdefault}{LinuxLibertineT-TLF}
+
+\begin{document}
+
+%\fontfamily{DejaVuSerif-TLF}
+
+\begin{wrapfigure}[5]{r}{0.3\linewidth} 
+	
+	\begin{tikzpicture}[scale=1.4]
+		\draw[very thick, -{Latex[length=6mm, width=2mm]}] (-0.4,0) -- (2.5,0);
+		
+		\foreach \x in {0,1}
+		{        
+			\coordinate (A\x) at ($(0,0)+(\x*1.4cm,0)$) {};
+			\draw ($(A\x)+(0,2pt)$) -- ($(A\x)-(0,2pt)$);
+			\node at ($(A\x)-(0,2ex)$) {\x};
+		}
+		
+		\fill[black] (0.4,0) circle (1.5pt) -- +(0,0) node[above] {$a$};
+		\fill[black] (1.8,0) circle (1.5pt) -- +(0,0) node[above] {$b$};
+		
+		
+	\end{tikzpicture}
+\vspace{0.3cm}
+\hspace{1cm}
+	Рис. 3
+\end{wrapfigure}
+
+Для вдумчивого читателя заметим, что ссылка в начале параграфа на то, что действительные числа и их свойства известны из курса математики, не является необходимой. Сформулированные выше свойства действительных чисел можно взять за исходное определение. Следует только исключить тривиальный случай: легко проверить, что для множества, состоящего только из одного нуля, выполняются все свойства \RomanNumeralCaps{1}--\RomanNumeralCaps{5} (в таком множестве $0 = 1$). Множество, в котором имеется хоть один элемент, отличный от нуля, будем здесь для кратности называть нетривиальным.
+
+Перефразируя сказанное, получим следующее определение.
+
+\noindent\textbf{Определение 1}. \textit{Нетривиальное множество элементов, обладающих свойствами \RomanNumeralCaps{1}--\RomanNumeralCaps{5}, называется множеством действительных чисел. Каждый элемент этого множества называется действительным числом.}
+
+Построение теории действительных чисел, основывающееся на таком их определении, называется \textit{аксиоматическим}, а свойства \RomanNumeralCaps{1}--\RomanNumeralCaps{5} -- \textit{аксиомами действительных чисел.}
+
+Геометрически множество действительных чисел изображается направленной (ориентированной) прямой, а отдельные числа -- ее точками (рис. 3).
+
+При такой интерпретации действительных чисел иногда вместо $a$ меньше $b$ ($a$ больше $b$) говорят, что точка $a$ лежит левее точки $b$ (что $a$ лежит правее $b$).
+
+В п. $2.2^*$ -- $2.6^*$ будут более детально проанализированы свойства \RomanNumeralCaps{1}--\RomanNumeralCaps{5} действительных чисел и выведены некоторые их следствия. Как и все пункты, отмеченные звездочками, эти пункты при первом чтении можно без существенного ущерба для усвоения курса математического анализа опустить. Для понимания дальнейшего материала (в \S 3 и следующих) вполне достаточно представления о действительных числах, которое дается в курсе элементарной математики.
+
+\section*{\boldmath$2.2^*$. Свойства сложения и умножения}
+
+Рассмотрим некоторые свойства сложения и умножения, которые вытекают из свойств \RomanNumeralCaps{1}, \RomanNumeralCaps{2} и \RomanNumeralCaps{3}. Прежде всего заметим,
+
+
+\end{document}
