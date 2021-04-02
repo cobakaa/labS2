@@ -5,22 +5,21 @@
 #include <limits.h>
 
 struct tree {
-	int fatherVal; // для построения дерева по значению отца
-	int val;
+	char fatherVal; // для построения дерева по значению отца
+	char val;
 	struct tree *son;
 	struct tree *brother;
 };
 
 bool clean_screen() {
-	if (printf("\033[2J") && printf("\033[0;0f")) return true;
-	else return false;
+	return printf("\033[2J") && printf("\033[0;0f");
 }
 
 struct tree *root;
-struct tree *mktree(struct tree *root1, struct tree *subTree, int val, int fatherVal);
+struct tree *mktree(struct tree *root1, struct tree *subTree, char val, char fatherVal);
 void printTree(struct tree *root, int lvl);
-bool isExists(const struct tree *root, int fatherVal);
-void deleteTree(struct tree * *root, int val, int id);
+bool isExists(const struct tree *root, char fatherVal);
+void deleteTree(struct tree * *root, char val, int id);
 bool isEmpty(const struct tree *root);
 int max_depth(const struct tree *root, int lvl);
 
@@ -28,27 +27,37 @@ int main() {
 
 	root = NULL;
 
-	int val, fatherVal, used_leaf_count = 0, min_depth = INT_MAX;
+	char val, fatherVal;
+	int used_leaf_count = 0, min_depth = INT_MAX;
 	int answer = 'y', answer1 = 1;
 	int choice;
 	clean_screen();
 
-	while (clean_screen() && printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ") && scanf("%d", &choice)) {
+	while (clean_screen() && printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ") 
+	&& scanf("%d", &choice)) {
 		switch (choice) {
 		case 1: {
 			do {
 				printf("Enter father and value of leaf: ");
 				if (!root) {
-					scanf("%d", &val);
+					scanf("%s", &val);
 					fatherVal = val;
-				} else scanf("%d %d", &fatherVal, &val);
+				} else {
+					char c = '\0';
+					while ((c = getchar()) && c != ' ' && c != '\n') {}
+					fatherVal = getchar();
+					while ((c = getchar()) && c != ' ' && c != '\n') {}
+					val = getchar();
+					// getchar();
+					// printf("%c %c\n", fatherVal, val);
+				}
 
 				if (root && !isExists(root, fatherVal)) {
 					printf("No such father.\n");
 				} else {
 					if (!root || !isExists(root, val)) {
 						root = mktree(root, root, val, fatherVal);
-						printf("Item (%d) has been added.\n", val);
+						printf("Item (%c) has been added.\n", val);
 					} else {
 						printf("Item with this value already exists.\n");
 					}
@@ -79,7 +88,7 @@ int main() {
 		case 3: {
 			do {
 				printf("Enter value of element that you want to delete: ");
-				scanf("%d", &val);
+				scanf("%s", &val);
 				if (isExists(root, val)) deleteTree(&root, val, 0);
 				else printf("There is no this node.\n");
 				if (root) {
@@ -122,7 +131,7 @@ int main() {
 	}
 }
 
-struct tree *mktree(struct tree * root, struct tree * subTree, int val, int fatherVal) {
+struct tree *mktree(struct tree * root, struct tree * subTree, char val, char fatherVal) {
 
 	if (!subTree) {
 		subTree = (struct tree *)malloc(sizeof(struct tree));
@@ -166,7 +175,7 @@ struct tree *mktree(struct tree * root, struct tree * subTree, int val, int fath
 
 void printTree(struct tree * root, int lvl) {
 	if (!root) return;
-	printf("%*d\n", 2 * lvl, root -> val);
+	printf("%*c\n", 2 * lvl, root -> val);
 	if (root -> son) printTree(root -> son, lvl + 1);
 	if (root -> brother) {
 		root = root -> brother;
@@ -178,7 +187,7 @@ bool isEmpty(const struct tree * root) {
 	return root == NULL;
 }
 
-void deleteTree(struct tree **t, int val, int id) { // id: 1 - удалить, 0 - пропустить
+void deleteTree(struct tree **t, char val, int id) { // id: 1 - удалить, 0 - пропустить
 
 	struct tree* tmp = *t;
 	struct tree* tmp1;
@@ -218,7 +227,7 @@ void deleteTree(struct tree **t, int val, int id) { // id: 1 - удалить, 0
 	return;
 }
 
-bool isExists(const struct tree * root, int val) {
+bool isExists(const struct tree * root, char val) {
 
 	bool tmp = false;
 
