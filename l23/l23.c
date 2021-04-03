@@ -33,7 +33,7 @@ int main() {
 	int choice;
 	clean_screen();
 
-	while (clean_screen() && printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ") 
+	while (/*clean_screen() &&*/ printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ") 
 	&& scanf("%d", &choice)) {
 		switch (choice) {
 		case 1: {
@@ -102,7 +102,11 @@ int main() {
 		}
 		case 4: {
 
-			printf("Max depth: %d", max_depth(root, 1));
+			if (!root) {
+				printf("Tree is empty...\n");
+				break;
+			}
+			printf("Max depth: %d", max_depth(root, 1) - 1);
 				
 			printf("\n");
 
