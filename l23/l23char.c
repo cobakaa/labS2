@@ -6,8 +6,8 @@
 #include <string.h>
 
 struct tree {
-	int fatherVal;
-	int val;
+	char fatherVal; // для построения дерева по значению отца
+	char val;
 	struct tree *son;
 	struct tree *brother;
 };
@@ -17,10 +17,10 @@ bool clean_screen() {
 }
 
 struct tree *root;
-struct tree *mktree(struct tree *root1, struct tree *subTree, int val, int fatherVal);
+struct tree *mktree(struct tree *root1, struct tree *subTree, char val, char fatherVal);
 void printTree(struct tree *root, int lvl);
-bool isExists(const struct tree *root, int fatherVal);
-void deleteTree(struct tree * *root, int val, int id);
+bool isExists(const struct tree *root, char fatherVal);
+void deleteTree(struct tree * *root, char val, int id);
 bool isEmpty(const struct tree *root);
 int max_depth(const struct tree *root, int lvl);
 
@@ -29,36 +29,44 @@ int main() {
 
 	root = NULL;
 
-	int val, fatherVal;
+	char val, fatherVal;
 	int used_leaf_count = 0, min_depth = INT_MAX;
 	char answer = 'y';
-	int ch;
-	char str[256];
+	char ch = '\0', c;
 	clean_screen();
 
 	while (true) {
         printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ");
-        fgets(str, sizeof(str), stdin);
-		if (sscanf(str, "%d", &ch) != 1) continue;
+        if ((ch = getchar()) == EOF) break;
+        int cnt = 0;
+        while ((c = getchar()) != EOF && c != '\n') cnt++;
+        if (cnt != 0) continue;
 
 		switch (ch) {
-		case 1: {
-			// do {
+		case '1': {
+			do {
 				if (!root) {
+                    int cnt;
                     do {
                         printf("Enter value of root: ");
-                        fgets(str, sizeof(str), stdin);
-                    } while (sscanf(str, "%d", &val) != 1);
+                        scanf("%c", &val);
+                        cnt = 0;
+                        while ((c = getchar()) != EOF && c != '\n') cnt++;
+                    } while (cnt != 0);
+                    // while ((c = getchar()) != EOF && c != '\n');
 					fatherVal = val;
 
 				} else {
+                    int cnt;
                     do {
                         printf("Enter father and value of leaf: ");
-						fgets(str, sizeof(str), stdin);
-
-                        // scanf("%d", &fatherVal);
-                        // scanf("%d", &val);
-                    } while(sscanf(str, "%d %d", &fatherVal, &val) != 2);
+                        cnt = 0;
+                        scanf("%c", &fatherVal);
+                        while ((c = getchar()) != EOF && c != ' ' && c != '\n') cnt++;
+                        scanf("%c", &val);
+                        while ((c = getchar()) != EOF && c != '\n') cnt++;
+                    } while(cnt != 0);
+                    // while ((c = getchar()) != EOF && c != '\n');
 				}
 
 				if (root && !isExists(root, fatherVal)) {
@@ -66,22 +74,22 @@ int main() {
 				} else {
 					if (!root || !isExists(root, val)) {
 						root = mktree(root, root, val, fatherVal);
-						printf("Item (%d) has been added.\n", val);
+						printf("Item (%c) has been added.\n", val);
 					} else {
 						printf("Item with this value already exists.\n");
 					}
 				}
-                // int cnt = 0;
-				// do {
-                //     printf("Do you want to add another leaf? (y/n) : ");
-                //     cnt = 0;
-                //     scanf("%c", &answer);
-                //     while ((c = getchar()) != EOF && c != '\n') cnt++;
-                // } while (!(cnt == 0 && (tolower(answer) == 'n' || tolower(answer) == 'y')));
-			// } while (answer != 'n');
+                int cnt = 0;
+				do {
+                    printf("Do you want to add another leaf? (y/n) : ");
+                    cnt = 0;
+                    scanf("%c", &answer);
+                    while ((c = getchar()) != EOF && c != '\n') cnt++;
+                } while (!(cnt == 0 && (tolower(answer) == 'n' || tolower(answer) == 'y')));
+			} while (answer != 'n');
 			break;
 		}
-		case 2: {
+		case '2': {
 			if (isEmpty(root)) printf("Tree is empty...\n");
 			else {
 				printf("\n__________TREE__________\n\n");
@@ -90,36 +98,38 @@ int main() {
 			}
 			break;
 		}
-		case 3: {
+		case '3': {
             if (isEmpty(root)) {
                 printf("Tree is empty...\n");
                 break;
             }
-			// do {
+			do {
+                int cnt;
                 do {
                     printf("Enter value of element that you want to delete: ");
-                    // scanf("%d", &val);
-					fgets(str, sizeof(str), stdin);
-                } while(sscanf(str, "%d", &val) != 1);
+                    cnt = 0;
+                    scanf("%c", &val);
+                    while ((c = getchar()) != EOF && c != '\n') cnt++;
+                } while(cnt != 0);
 				if (isExists(root, val)) {
                     deleteTree(&root, val, 0);
-                    printf("Item (%d) has been added.\n", val);
+                    printf("Item (%c) has been added.\n", val);
                 }
 				else printf("There is no this node.\n");
-			// 	if (root) {
-            //         int cnt;
-            //         do {
-            //             printf("Do you want to add another leaf? (y/n) : ");
-            //             cnt = 0;
-            //             scanf("%c", &answer);
-            //             while ((c = getchar()) != EOF && c != '\n') cnt++;
-            //         } while (!(cnt == 0 && (tolower(answer) == 'n' || tolower(answer) == 'y')));
-            //     } else (answer = 'n');
+				if (root) {
+                    int cnt;
+                    do {
+                        printf("Do you want to add another leaf? (y/n) : ");
+                        cnt = 0;
+                        scanf("%c", &answer);
+                        while ((c = getchar()) != EOF && c != '\n') cnt++;
+                    } while (!(cnt == 0 && (tolower(answer) == 'n' || tolower(answer) == 'y')));
+                } else (answer = 'n');
                 
-			// } while (answer != 'n');
+			} while (answer != 'n');
 			break;
 		}
-		case 4: {
+		case '4': {
 
 			if (!root) {
 				printf("Tree is empty...\n");
@@ -130,7 +140,7 @@ int main() {
 			printf("\n");
 			break;
 		}
-		case 5: {
+		case '5': {
 			if (root) {
 				deleteTree(&root, root -> val, 1);
 			}
@@ -147,7 +157,7 @@ int main() {
 	}
 }
 
-struct tree *mktree(struct tree * root, struct tree * subTree, int val, int fatherVal) {
+struct tree *mktree(struct tree * root, struct tree * subTree, char val, char fatherVal) {
 
 	if (!subTree) {
 		subTree = (struct tree *)malloc(sizeof(struct tree));
@@ -191,7 +201,7 @@ struct tree *mktree(struct tree * root, struct tree * subTree, int val, int fath
 
 void printTree(struct tree * root, int lvl) {
 	if (!root) return;
-	printf("%*d\n", 4 * lvl, root -> val);
+	printf("%*c\n", 2 * lvl, root -> val);
 	if (root -> son) printTree(root -> son, lvl + 1);
 	if (root -> brother) {
 		root = root -> brother;
@@ -203,7 +213,7 @@ bool isEmpty(const struct tree * root) {
 	return root == NULL;
 }
 
-void deleteTree(struct tree **t, int val, int id) { // id: 1 - удалить, 0 - пропустить
+void deleteTree(struct tree **t, char val, int id) { // id: 1 - удалить, 0 - пропустить
 
 	struct tree* tmp = *t;
 	struct tree* tmp1;
@@ -243,7 +253,7 @@ void deleteTree(struct tree **t, int val, int id) { // id: 1 - удалить, 0
 	return;
 }
 
-bool isExists(const struct tree * root, int val) {
+bool isExists(const struct tree * root, char val) {
 
 	bool tmp = false;
 
