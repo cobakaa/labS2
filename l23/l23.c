@@ -103,7 +103,7 @@ int main() {
                 } while(sscanf(str, "%d", &val) != 1);
 				if (isExists(root, val)) {
                     deleteTree(&root, val, 0);
-                    printf("Item (%d) has been added.\n", val);
+                    printf("Item (%d) has been deleted.\n", val);
                 }
 				else printf("There is no this node.\n");
 			// 	if (root) {
@@ -162,7 +162,7 @@ struct tree *mktree(struct tree * root, struct tree * subTree, int val, int fath
 		subTree -> val = val;
 		subTree -> fatherVal = fatherVal;
 
-		if (!root) return subTree; // для первого вхождения
+		if (!root) return subTree;
 		if (root -> val == fatherVal) root -> son = subTree;
 		else root -> brother = subTree;
 
