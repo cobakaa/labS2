@@ -68,6 +68,10 @@ void sort(Stack * s) {
     sort(&tmp2);
 
     res = merge(&tmp1, &tmp2);
+
+    stack_destroy(&tmp1);
+    stack_destroy(&tmp2);
+
     stack_copy(s, &res);
 }
 
