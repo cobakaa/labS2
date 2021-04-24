@@ -7,6 +7,7 @@
 #define INIT_COUNT 6
 #define GROUP_NAME_SIZE 9
 #define MARKS_COUNT 15
+#define MARKS_MAX_STR 10
 
 typedef struct
 {
