@@ -10,12 +10,11 @@ int main() {
 
     int num;
 
-    while (scanf("%d", &num) == 1)
-    {
+    while (scanf("%d", &num) == 1) {
         stack_push(&s1, num);
     }
     
-    stack_print(&s1);
+    // stack_print(&s1);
     
     sort(&s1);
     stack_print(&s1);

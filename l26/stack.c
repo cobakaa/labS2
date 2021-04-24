@@ -38,4 +38,5 @@ Stack * stack_copy(Stack * l, Stack * r) {
     // stack_destroy(l);
     vector_copy(&l->data, &r->data);
     l->size = r->size;
+    return l;
 }
