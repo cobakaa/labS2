@@ -9,6 +9,7 @@ OBJ = vector.o stack.o merge_sort.o main.o
 
 main: $(OBJ)
 	$(LD) -o main $(OBJ)
+	make clean
 
 main.o: main.c vector.h stack.h merge_sort.h
 
