@@ -118,6 +118,11 @@ void print_foot() {
 	printf("┛\n");
 }
 
+typedef struct {
+	Person p;
+	double avg;
+} Avg_pair;
+
 int main(int argc, char* argv[]) {
 
 	if (argc > 5 && argc != 1) {
@@ -131,16 +136,23 @@ int main(int argc, char* argv[]) {
     bool f_key = false, p_key = false;
     int p_value = 0;
 
-    for (int i = 0; i < argc; ++i) {
+    for (int i = 1; i < argc - 1; ++i) {
+		// printf("%s\n", argv[i]);
         if (strcmp(argv[i], "-f") == 0) {
             f_key = true;
-        }
+        } else if (strcmp(argv[i], "-p") == 0) {
+			++i;
+			p_key = true;
+			p_value = atoi(argv[i]);
+		} else {
+			usage();
+			return 1;
+		}
 
-        if ()
     }
 
 	Person pers;
-	FILE *in = fopen(argv[1], "r");
+	FILE *in = fopen(argv[argc - 1], "r");
 
 	if (!in) {
 		perror("Can't open file");
@@ -148,74 +160,82 @@ int main(int argc, char* argv[]) {
 	}
 
 	int people_count = 0;
-	int minSum[8];
-	int maxSum[8];
-	int maxDelta = -1;
-	int group_num;
-	int minSum_sub_count[8];
-	int maxSum_sub_count[8];
+	
+	Avg_pair best[p_value];
 
-	for (int i = 0; i < 8; ++i) {
-		maxSum[i] = -1;
-		minSum[i] = 80;
-		minSum_sub_count[i] = 1;
-		maxSum_sub_count[i] = 1;
+	for (int i = 0; i < p_value; ++i) {
+		best[i].avg = -1;
 	}
 
-	if (f == 1) {
+
+	if (f_key) {
 		print_head();
 	}
 
 	while (fread(&pers, sizeof(pers), 1, in) == 1) {
 
-				
+		Avg_pair cur;
+
 		for (int i = pers.subjects_num; i < 15; ++i) {
 			pers.marks[i] = -1;
 		}
-		if (f == 1) { 
+
+		cur.p = pers;
+
+		if (f_key) { 
 			if (people_count != 0) print_table(); // Иначе лишняя строка.
 			print_data(pers);
 		}
 
 		++people_count;
 
-		group_num = (int)(pers.group[6] - '0');
-
-		int sum = 0;
+		double sum = 0;
 
 		for (int i = 0; i < pers.subjects_num; ++i) {
-			sum += pers.marks[i];
+			if (pers.marks[i] != -1) {
+				sum += pers.marks[i];
+			}
 		}
 
-		if (maxSum[group_num - 1] * pers.subjects_num < sum * maxSum_sub_count[group_num - 1]) {  // maxSum[group_naum - 1] / maxSum_sub_count[group - 1] < sum / pers.subjects_num
-			maxSum[group_num - 1] = max(maxSum[group_num - 1], sum);							// Максимальный средний балл < текущего среднего балла
-			maxSum_sub_count[group_num -1] = pers.subjects_num;
+		// printf("%d", sum);
+
+		cur.avg = sum / pers.subjects_num;
+
+		if (cur.avg > best[p_value - 1].avg) {
+			best[p_value - 1] = cur;
 		}
 
-		if (minSum[group_num - 1] * pers.subjects_num > sum * minSum_sub_count[group_num - 1]) { // Аналогично
-			minSum[group_num - 1] = min(minSum[group_num - 1], sum);
-			minSum_sub_count[group_num - 1] = pers.subjects_num;
+		for (int i = p_value - 1; i > 0; --i) {
+			if (best[i].avg > best[i - 1].avg) {
+				Avg_pair tmp = best[i];
+				best[i] = best[i - 1];
+				best[i - 1] = tmp;
+			}
 		}
 
 	}
 
-	if (f == 1) print_foot();
+	if (f_key) print_foot();
 
 	fseek(in, 0, SEEK_SET);
 	if (people_count == 0) {
 		perror("No people.\n");
 		return 3;
 	}
-									// i - номер группы - 1
-	for (int i = 0; i < 8; ++i) {													// maxSum[i]/maxSum_sub_count[i] - minSum[i]/minSum_sub_count[i] > maxDelta
-		int k = maxDelta * maxSum_sub_count[i] * minSum_sub_count[i]; 
-		if (maxSum[i] * minSum_sub_count[i] - minSum[i] * maxSum_sub_count[i] > k) { //избегаем double
-			group_num = i;
-			maxDelta = maxSum[i] - minSum[i]; // в условии разница максимальна
-		}
+
+	fclose(in);
+
+	printf("\nBest %d students\n", p_value);
+
+	print_head();
+	for (int i = 0; i < p_value; ++i) {
+		if (i != 0) print_table();
+		print_data(best[i].p);
 	}
 
-	printf("\nAnswer: М80-10%dБ\n", group_num + 1);
-	fclose(in);
+	print_foot();
+
+	// printf("%lf %d\n", best[0].avg, best[0].p.subjects_num);
+
 	return 0;
 }
