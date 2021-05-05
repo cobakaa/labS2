@@ -225,9 +225,12 @@ int main(int argc, char* argv[]) {
 
 	fclose(in);
 
+	p_value = (people_count < p_value) ? people_count : p_value;
+
 	printf("\nBest %d students\n", p_value);
 
 	print_head();
+
 	for (int i = 0; i < p_value; ++i) {
 		if (i != 0) print_table();
 		print_data(best[i].p);
