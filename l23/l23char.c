@@ -33,11 +33,13 @@ int main() {
 	int used_leaf_count = 0, min_depth = INT_MAX;
 	char answer = 'y';
 	char ch = '\0', c;
+	char ans[256];
 	clean_screen();
 
 	while (true) {
         printf("\nMenu: \n\t1) Add root/leaf.\n\t2) Print tree.\n\t3) Remove tree node.\n\t4) Max depth.\n\t5) Exit.\n\nYour choice: ");
         if ((ch = getchar()) == EOF) break;
+		// char c;
         int cnt = 0;
         while ((c = getchar()) != EOF && c != '\n') cnt++;
         if (cnt != 0) continue;
