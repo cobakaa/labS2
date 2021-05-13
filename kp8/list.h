@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "vector.h"
 
-#define DEFAULT_SIZE 10
+#define DEFAULT_SIZE 8
 
 // typedef struct {
 //     char value;

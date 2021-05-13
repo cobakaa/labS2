@@ -71,9 +71,9 @@ Iterator list_insert(List* l, Iterator* i, const Item t) {
     if (get_VItem(&l->data, l->top).next == -1)
 	{
         int cap = l->data.capacity;
-        for (int i = l->capacity; i < cap; ++i) {
+        for (int i = l->data.size; i <= cap; ++i) {
             VItem tmp;
-            tmp.next = i + 2;
+            tmp.next = i + 1;
             push_back(&l->data, tmp);
         }
 
@@ -99,26 +99,21 @@ Iterator list_insert(List* l, Iterator* i, const Item t) {
             i->node = l->capacity;
         }
         
-        first = iterator_first(l);
-        while (get_VItem(&l->data, first.node).next != l->head) {
-            first = iterator_next(&first);
-        }
-
-        if (l->top == l->head) {
-            l->top = l->head - 1;
-        }
-
+        int prev_head = l->head;
         l->head = l->capacity;
-
-        tmp = get_VItem(&l->data, first.node);
-        tmp.next = l->head;
-        set_VItem(&l->data, first.node, tmp);
-
-        // tmp = get_VItem(&l->data, 0);
-        // if (tmp.next == -1) {
-        //     tmp.next = 1;
-        //     set_VItem(&l->data, 0, tmp);
         // }
+        Iterator cur = iterator_first(l);
+        int head_check = (l->size == 0) ? l->head : prev_head;
+        while (get_VItem(&l->data, cur.node).next != head_check) {
+            cur = iterator_next(&cur);
+        }
+        if (l->top == prev_head) {
+            l->top = prev_head - 1;
+        }
+    
+        tmp = get_VItem(&l->data, cur.node);
+        tmp.next = l->head;
+        set_VItem(&l->data, cur.node, tmp);
 
 	}
     Iterator res;
