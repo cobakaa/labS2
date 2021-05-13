@@ -20,22 +20,19 @@ int main() {
         switch (ch)
         {
         case 1:
-            printf("Enter elements ('q' to exit): ");
-            int element;
+            printf("Enter key and value of element: ");
+            SItem element;
 
-            while(true) {
-                scanf("%s", str);
-                if (sscanf(str, "%d", &element) != 1) {
-                    break;
-                }
-                stack_push(&s1, element);
-
-            }
+            do {
+                fgets(str, sizeof(str), stdin);
+            } while (sscanf(str, "%d %s", &element.key, element.value) != 2);
+            
+            stack_push(&s1, element);
             
             break;
         
         case 2:
-            printf("Stack: ");
+            printf("Stack:\n");
             stack_print(&s1);
             break;
 
@@ -57,7 +54,7 @@ int main() {
             break;
 
         case 4:
-            printf("Sorted stack: ");
+            printf("Sorted stack:\n");
             sort(&s1);
             stack_print(&s1);
             break;

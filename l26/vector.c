@@ -70,11 +70,9 @@ bool vector_is_empty(const Vector * vector) {
 }
 
 void vector_print(const Vector * vector) {
-    for (int i = 0; i < vector->size; ++i) {
-        printf("%d", get_VItem(vector, i));
-        if (i != vector->size - 1) {
-            printf(" ");
-        }
+    for (int i = vector->size - 1; i >= 0; --i) {
+        printf(" ");
+        printf("%d %s\n", get_VItem(vector, i).key, get_VItem(vector, i).value);
     }
     printf("\n");
 }

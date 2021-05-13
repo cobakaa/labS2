@@ -11,7 +11,7 @@ Stack merge(Stack * s1, Stack * s2) {
         s1_item = stack_pop(s1);
         s2_item = stack_pop(s2);
 
-        if (s1_item > s2_item) {
+        if (s1_item.key > s2_item.key) {
             stack_push(&res, s2_item);
             stack_push(s1, s1_item);
         } else {

@@ -4,12 +4,13 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef int VItem;
+// typedef int VItem;
 
-// typedef struct
-// {
-//    udt Item;
-// } VItem;
+typedef struct
+{
+    int key;
+    char value[32];
+} VItem;
 
 
 typedef struct {
