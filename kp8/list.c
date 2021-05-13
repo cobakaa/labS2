@@ -10,12 +10,14 @@ Iterator iterator_next(Iterator* i) {
 }
 
 Iterator iterator_first(const List* l) {
-    Iterator res = {l->data, l->data[l->head].next};
+    Iterator res;
+    res.begin = l->data.data;
+    res.node = res.begin[l->head].next;
     return res;
 }
 
 Iterator iterator_last(const List* l) {
-    Iterator res = {l->data, l->head};
+    Iterator res = {l->data.data, l->head};
     return res;
 }
 
@@ -27,12 +29,13 @@ void iterator_store(const Iterator* i, const Item t) {
     i->begin[i->node].data = t;
 }
 
-Iterator iterator_prev(List *list, Iterator * it) {
-    Iterator first = iterator_first(list);
+Iterator iterator_prev(List * l, Iterator * it) {
+    Iterator first = iterator_first(l);
 	Iterator res = first;
 
-	if (it->node == -1)
-		return iterator_last(list);
+    if (res.node == -1) {
+        return iterator_last(l);
+    }
 
 	while (res.begin[res.node].next != it->node)
 		res = iterator_next(&first);
@@ -40,40 +43,92 @@ Iterator iterator_prev(List *list, Iterator * it) {
 	return res;
 }
 
-void list_create(List* l, int list_size) {
+void list_create(List* l) {
 
-    if (list_size < 1)
-		return;
 
-	l->data = (LItem *)malloc(sizeof(LItem) * (list_size + 1));
+    int list_size = DEFAULT_SIZE;
 
-    for (int i = 0; i < list_size; ++i) {
-        l->data[i].next = i + 1;
+	vector_create(&l->data);
+
+    for (int i = 0; i <= list_size; ++i) {
+        VItem tmp;
+        tmp.next = i + 1;
+        push_back(&l->data, tmp); // l->data[i].next = i + 1;
     }
 
-    l->data[list_size - 1].next = -1;
+    VItem tmp;
+    tmp.next = -1;
+    set_VItem(&l->data, list_size - 1, tmp); // l->data[list_size - 1].next = -1;
     l->head = list_size;
-    l->data[l->head].next = l->head;
+    tmp.next = l->head;
+    set_VItem(&l->data, l->head, tmp); // l->data[l->head].next = l->head;
     l->top = 0;
     l->capacity = list_size;
     l->size = 0;
 }
 
 Iterator list_insert(List* l, Iterator* i, const Item t) {
-    // if (l->size == l->capacity)
-	// {
-	// 	printf("List is full\n");
+    if (get_VItem(&l->data, l->top).next == -1)
+	{
+        int cap = l->data.capacity;
+        for (int i = l->capacity; i < cap; ++i) {
+            VItem tmp;
+            tmp.next = i + 2;
+            push_back(&l->data, tmp);
+        }
 
-	// 	return *i;
-	// }
+        Iterator first = iterator_first(l);
+
+        VItem tmp;
+        tmp.next = -1;
+        set_VItem(&l->data, l->data.size - 2, tmp);
+
+        tmp = get_VItem(&l->data, l->capacity);
+        tmp.next = (l->capacity + 1 == l->data.size || tmp.next == -1) ? tmp.next : l->capacity + 1;
+        set_VItem(&l->data, l->capacity, tmp);
+
+        tmp = get_VItem(&l->data, l->capacity - 1);
+        tmp.next = (l->capacity + 1 == l->data.capacity) ? -1 : l->capacity;
+        set_VItem(&l->data, l->capacity-1, tmp);
+		
+        l->capacity = l->data.size - 1;
+        tmp.next = (first.node == l->head) ? l->capacity : first.node;
+        set_VItem(&l->data, l->data.size - 1, tmp);
+
+        if (i->node == l->head) {
+            i->node = l->capacity;
+        }
+        
+        Iterator cur = iterator_first(l);
+        while (get_VItem(&l->data, first.node).next != l->head) {
+            cur = iterator_next(&first);
+        }
+
+        if (l->top == l->head) {
+            l->top = l->head - 1;
+        }
+
+        l->head = l->capacity;
+
+        tmp = get_VItem(&l->data, first.node);
+        tmp.next = l->head;
+        set_VItem(&l->data, first.node, tmp);
+
+        // tmp = get_VItem(&l->data, 0);
+        // if (tmp.next == -1) {
+        //     tmp.next = 1;
+        //     set_VItem(&l->data, 0, tmp);
+        // }
+
+	}
     Iterator res;
-    res.begin = l->data;
+    res.begin = l->data.data;
     res.node = l->top;
     if (res.node == -1) {
         return iterator_last(l);
     }
 
-    l->top = l->data[l->top].next;
+    l->top = get_VItem(&l->data, l->top).next; // l->data[l->top].next;
 
     
     res.begin[res.node].data = t;
@@ -108,7 +163,7 @@ void list_destroy(List * l) {
     l->head = 0;
     l->size = 0;
     l->top = 0;
-    free(l->data);
+    vector_destroy(&l->data);
 }
 
 int list_size(const List* l) {
@@ -148,8 +203,8 @@ void list_change_elements(List * l, int k) {
     Iterator prev = iterator_prev(l, &cur);
     Iterator next = iterator_next(&cur);
     // next = iterator_next(&cur);
-    LItem tmp_next = next.begin[next.node];
-    LItem tmp_prev = prev.begin[prev.node];
+    VItem tmp_next = next.begin[next.node];
+    VItem tmp_prev = prev.begin[prev.node];
     
     list_delete(l, &next);
     list_delete(l, &prev);
@@ -161,8 +216,8 @@ void list_change_elements(List * l, int k) {
         cur = iterator_next(&first);
     }
 
-    list_insert(l, &cur, tmp_next.data);
+    cur = list_insert(l, &cur, tmp_next.data);
     cur = iterator_next(&cur);
-    // cur = iterator_next(&cur);
+    cur = iterator_next(&cur);
     list_insert(l, &cur, tmp_prev.data);
 }
