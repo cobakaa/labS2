@@ -26,6 +26,8 @@ int get_index(const Matrix * m, float value, Index * res);
 
 void matrix_inner_print(const Matrix * m);
 void matrix_print(const Matrix * m);
+void matrix_clear(Matrix * m);
+bool matrix_empty(const Matrix * m);
 
 
 

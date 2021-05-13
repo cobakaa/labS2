@@ -32,12 +32,23 @@ int main() {
 
             float element;
             Index ind;
+            char str_elem[256];
+            bool stop = false;
             for (int i = 0; i < s; ++i) {
                 for (int j = 0; j < c; ++j) {
-                    scanf("%f", &element);
+                    scanf("%s", str_elem);
+                    if (sscanf(str_elem, "%f", &element) != 1) {
+                        printf("Incrrect value.");
+                        stop = true;
+                        matrix_clear(&m);
+                        break;
+                    }
                     ind.s = i + 1;
                     ind.c = j + 1;
                     matrix_add(&m, element, ind);
+                }
+                if (stop) {
+                    break;
                 }
             }
             
@@ -52,6 +63,10 @@ int main() {
             break;
 
         case 3:
+            if (matrix_empty(&m)) {
+                printf("Matrix is empty.\n");
+                break;
+            }
             printf("Enter value to matrix trnsfom: ");
             float value;
             scanf("%f", &value);

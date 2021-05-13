@@ -192,3 +192,11 @@ void matrix_print(const Matrix * m) {
         printf("\n");
     }
 }
+
+void matrix_clear(Matrix * m) {
+    matrix_create(m, 0, 0);
+}
+
+bool matrix_empty(const Matrix * m) {
+    return m->M == 0 || m->N == 0;
+}
