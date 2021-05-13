@@ -46,6 +46,6 @@ int list_size(const List* l);
 bool list_empty(const List* l);
 void list_print(const List* l);
 
-void list_change_elements(List * l, int k);
+bool list_swap_elements(List * l, int k);
 
 #endif 

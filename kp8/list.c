@@ -99,9 +99,9 @@ Iterator list_insert(List* l, Iterator* i, const Item t) {
             i->node = l->capacity;
         }
         
-        Iterator cur = iterator_first(l);
+        first = iterator_first(l);
         while (get_VItem(&l->data, first.node).next != l->head) {
-            cur = iterator_next(&first);
+            first = iterator_next(&first);
         }
 
         if (l->top == l->head) {
@@ -187,10 +187,10 @@ void list_print(const List* l) {
     }
 }
 
-void list_change_elements(List * l, int k) {
+bool list_swap_elements(List * l, int k) {
     if (k <= 0 || k >= list_size(l) - 1 || list_size(l) < 3) {
         printf("Incorrect value.\n");
-        return;
+        return false;
     }
 
     Iterator first = iterator_first(l);
@@ -220,4 +220,6 @@ void list_change_elements(List * l, int k) {
     cur = iterator_next(&cur);
     cur = iterator_next(&cur);
     list_insert(l, &cur, tmp_prev.data);
+
+    return true;
 }
