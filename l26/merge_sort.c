@@ -67,12 +67,12 @@ void sort(Stack * s) {
     sort(&tmp1);
     sort(&tmp2);
 
-    res = merge(&tmp1, &tmp2);
+    *s = merge(&tmp1, &tmp2);
 
     stack_destroy(&tmp1);
     stack_destroy(&tmp2);
 
-    stack_copy(s, &res);
+    // stack_copy(s, &res);
 }
 
 void reverse(Stack * s) {
