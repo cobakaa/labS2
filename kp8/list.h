@@ -4,30 +4,25 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "vector.h"
 
-#define DEFAULT_SIZE 8
-
-// typedef struct {
-//     char value;
-// } Item;
-
-// typedef struct {
-//     int next;
-//     Item data;
-// } LItem;
 
 typedef struct {
-    int head;
+    char value;
+} Item;
+
+typedef struct LItem {
+    struct LItem * next;
+    Item data;
+} LItem;
+
+typedef struct {
+    struct LItem * head;
     int size;
-    int top;
-    int capacity;
-    Vector data;
+    
 } List;
 
 typedef struct {
-    VItem * begin;
-    int node;
+    struct LItem * node;
 } Iterator;
 
 bool iterator_equal(const Iterator* lhs, const Iterator* rhs);

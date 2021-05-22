@@ -1,43 +1,37 @@
 #include "list.h"
 
 bool iterator_equal(const Iterator* lhs, const Iterator* rhs) {
-    return (lhs->node == rhs->node) && (lhs->begin == rhs->begin);
+    return (lhs->node == rhs->node);
 }
 
 Iterator iterator_next(Iterator* i) {
-    i->node = i->begin[i->node].next;
+    i->node = i->node->next;
     return *i;
 }
 
 Iterator iterator_first(const List* l) {
-    Iterator res;
-    res.begin = l->data.data;
-    res.node = res.begin[l->head].next;
+    Iterator res = {l->head->next};
     return res;
 }
 
 Iterator iterator_last(const List* l) {
-    Iterator res = {l->data.data, l->head};
+    Iterator res = {l->head};
     return res;
 }
 
 Item iterator_fetch(const Iterator* i) {
-    return i->begin[i->node].data;
+    return i->node->data;
 }
 
 void iterator_store(const Iterator* i, const Item t) {
-    i->begin[i->node].data = t;
+    i->node->data = t;
 }
 
 Iterator iterator_prev(List * l, Iterator * it) {
     Iterator first = iterator_first(l);
 	Iterator res = first;
 
-    if (res.node == -1) {
-        return iterator_last(l);
-    }
-
-	while (res.begin[res.node].next != it->node)
+	while (res.node->next != it->node)
 		res = iterator_next(&first);
 
 	return res;
@@ -45,95 +39,25 @@ Iterator iterator_prev(List * l, Iterator * it) {
 
 void list_create(List* l) {
 
-
-    int list_size = DEFAULT_SIZE;
-
-	vector_create(&l->data);
-
-    for (int i = 0; i <= list_size; ++i) {
-        VItem tmp;
-        tmp.next = i + 1;
-        push_back(&l->data, tmp); // l->data[i].next = i + 1;
-    }
-
-    VItem tmp;
-    tmp.next = -1;
-    set_VItem(&l->data, list_size - 1, tmp); // l->data[list_size - 1].next = -1;
-    l->head = list_size;
-    tmp.next = l->head;
-    set_VItem(&l->data, l->head, tmp); // l->data[l->head].next = l->head;
-    l->top = 0;
-    l->capacity = list_size;
+    l->head = (struct LItem *)malloc(sizeof(struct LItem));
+    l->head->next = l->head;
     l->size = 0;
 }
 
 Iterator list_insert(List* l, Iterator* i, const Item t) {
-    if (get_VItem(&l->data, l->top).next == -1)
-	{
-        int cap = l->data.capacity;
-        for (int i = l->data.size; i <= cap; ++i) {
-            VItem tmp;
-            tmp.next = i + 1;
-            push_back(&l->data, tmp);
-        }
-
-        Iterator first = iterator_first(l);
-
-        VItem tmp;
-        tmp.next = -1;
-        set_VItem(&l->data, l->data.size - 2, tmp);
-
-        tmp = get_VItem(&l->data, l->capacity);
-        tmp.next = (l->capacity + 1 == l->data.size || tmp.next == -1) ? tmp.next : l->capacity + 1;
-        set_VItem(&l->data, l->capacity, tmp);
-
-        tmp = get_VItem(&l->data, l->capacity - 1);
-        tmp.next = (l->capacity + 1 == l->data.capacity) ? -1 : l->capacity;
-        set_VItem(&l->data, l->capacity-1, tmp);
-		
-        l->capacity = l->data.size - 1;
-        tmp.next = (first.node == l->head) ? l->capacity : first.node;
-        set_VItem(&l->data, l->data.size - 1, tmp);
-
-        if (i->node == l->head) {
-            i->node = l->capacity;
-        }
-        
-        int prev_head = l->head;
-        l->head = l->capacity;
-        // }
-        Iterator cur = iterator_first(l);
-        int head_check = (l->size == 0) ? l->head : prev_head;
-        while (get_VItem(&l->data, cur.node).next != head_check) {
-            cur = iterator_next(&cur);
-        }
-        if (l->top == prev_head) {
-            l->top = prev_head - 1;
-        }
-    
-        tmp = get_VItem(&l->data, cur.node);
-        tmp.next = l->head;
-        set_VItem(&l->data, cur.node, tmp);
-
-	}
-    Iterator res;
-    res.begin = l->data.data;
-    res.node = l->top;
-    if (res.node == -1) {
+    // Iterator prev = iterator_prev(l, i);
+    Iterator res = { (struct LItem *)malloc(sizeof(struct LItem)) };
+    if (!res.node) {
         return iterator_last(l);
     }
 
-    l->top = get_VItem(&l->data, l->top).next; // l->data[l->top].next;
-
-    
-    res.begin[res.node].data = t;
-    res.begin[res.node].next = i->node;
+    res.node->data = t;
+    res.node->next = i->node;
     Iterator prev = iterator_prev(l, i);
-    res.begin[prev.node].next = res.node;
-
+    prev.node->next = res.node;
     l->size++;
-
     return res;
+
 }
 
 Iterator list_delete(List* l, Iterator* i) {
@@ -143,22 +67,29 @@ Iterator list_delete(List* l, Iterator* i) {
     }
 
     Iterator i_prev = iterator_prev(l, i);
-    res.node = i->begin[i->node].next;
-    i->begin[i_prev.node].next = res.node;
+    res.node = i->node->next;
+    i_prev.node->next = res.node;
     l->size--;
 
-    i->begin[i->node].next = l->top;
-
-    l->top = i->node;
-    i->node = -1;
+    free(i->node);
+    i->node = NULL;
     return res;
 }
 
 void list_destroy(List * l) {
-    l->head = 0;
+    struct LItem * i = l->head->next;
+    while (i != l->head)
+    {
+        struct LItem * tmp = l->head->next;
+        i = i->next;
+        l->head->next = i;
+        free(tmp);
+
+    }
+    free(l->head);
+    l->head = NULL;
     l->size = 0;
-    l->top = 0;
-    vector_destroy(&l->data);
+    
 }
 
 int list_size(const List* l) {
@@ -191,30 +122,22 @@ bool list_swap_elements(List * l, int k) {
     Iterator first = iterator_first(l);
     Iterator cur = first;
 
-    for (int i = 0; i < k; ++i) {
-        cur = iterator_next(&first);
-    }
-
-    Iterator prev = iterator_prev(l, &cur);
-    Iterator next = iterator_next(&cur);
-    // next = iterator_next(&cur);
-    VItem tmp_next = next.begin[next.node];
-    VItem tmp_prev = prev.begin[prev.node];
-    
-    list_delete(l, &next);
-    list_delete(l, &prev);
-
-    first = iterator_first(l);
-    cur = first;
-    
     for (int i = 0; i < k - 1; ++i) {
         cur = iterator_next(&first);
     }
 
-    cur = list_insert(l, &cur, tmp_next.data);
-    cur = iterator_next(&cur);
-    cur = iterator_next(&cur);
-    list_insert(l, &cur, tmp_prev.data);
+    // cur.node->next = cur.node->next->next;
+    LItem * prev_prev = iterator_prev(l, &cur).node;
+    LItem * prev = cur.node;
+    LItem * it_k = iterator_next(&cur).node;
+    LItem * next = iterator_next(&cur).node;
+    
+
+    it_k->next = prev;
+    prev->next = next->next;
+    next->next = it_k;
+    prev_prev->next = next;
+    
 
     return true;
 }

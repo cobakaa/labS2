@@ -30,10 +30,6 @@ int main() {
                     while ((c = getchar()) != EOF && c != '\n') cnt++;
                 } while (cnt != 0);
 
-                // do {
-                //     printf("Enter value of element: ");
-                //     fgets(str, sizeof(str), stdin);
-                // } while (sscanf(str, "%s", &item.value) != 1 && strlen(item.value) == 1);
 
                 do {
                     printf("Enter index: ");
