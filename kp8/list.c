@@ -10,12 +10,21 @@ Iterator iterator_next(Iterator* i) {
 }
 
 Iterator iterator_first(const List* l) {
-    Iterator res = {l->head->next};
+    Iterator res = {l->head};
     return res;
 }
 
 Iterator iterator_last(const List* l) {
-    Iterator res = {l->head};
+
+    Iterator res = iterator_first(l);
+
+    if (res.node == NULL) {
+        return res;
+    }
+
+    while (res.node->next != NULL) {
+        iterator_next(&res);
+    }
     return res;
 }
 
@@ -28,7 +37,16 @@ void iterator_store(const Iterator* i, const Item t) {
 }
 
 Iterator iterator_prev(List * l, Iterator * it) {
+
+    if (it->node == NULL) {
+        return iterator_last(l);
+    }
+
     Iterator first = iterator_first(l);
+    if (it->node == l->head) {
+        Iterator res = {NULL};
+        return res;
+    }
 	Iterator res = first;
 
 	while (res.node->next != it->node)
@@ -39,13 +57,12 @@ Iterator iterator_prev(List * l, Iterator * it) {
 
 void list_create(List* l) {
 
-    l->head = (struct LItem *)malloc(sizeof(struct LItem));
-    l->head->next = l->head;
+    l->head = NULL;
     l->size = 0;
 }
 
 Iterator list_insert(List* l, Iterator* i, const Item t) {
-    // Iterator prev = iterator_prev(l, i);
+
     Iterator res = { (struct LItem *)malloc(sizeof(struct LItem)) };
     if (!res.node) {
         return iterator_last(l);
@@ -53,8 +70,12 @@ Iterator list_insert(List* l, Iterator* i, const Item t) {
 
     res.node->data = t;
     res.node->next = i->node;
-    Iterator prev = iterator_prev(l, i);
-    prev.node->next = res.node;
+    if (i->node == l->head) {
+        l->head = res.node;
+    } else {
+        Iterator prev = iterator_prev(l, i);
+        prev.node->next = res.node;
+    }
     l->size++;
     return res;
 
@@ -62,13 +83,17 @@ Iterator list_insert(List* l, Iterator* i, const Item t) {
 
 Iterator list_delete(List* l, Iterator* i) {
     Iterator res = iterator_last(l);
-    if (iterator_equal(i, &res)) {
+    if (res.node == NULL) {
         return res;
     }
 
     Iterator i_prev = iterator_prev(l, i);
     res.node = i->node->next;
-    i_prev.node->next = res.node;
+    if (i_prev.node == NULL) {
+        l->head = i->node->next;
+    } else {
+        i_prev.node->next = res.node;
+    }
     l->size--;
 
     free(i->node);
@@ -78,7 +103,7 @@ Iterator list_delete(List* l, Iterator* i) {
 
 void list_destroy(List * l) {
     struct LItem * i = l->head->next;
-    while (i != l->head)
+    while (i != NULL)
     {
         struct LItem * tmp = l->head->next;
         i = i->next;
@@ -106,8 +131,7 @@ bool list_empty(const List* l) {
 
 void list_print(const List* l) {
     Iterator cur = iterator_first(l);
-    Iterator last = iterator_last(l);
-    while (!iterator_equal(&cur, &last)) {
+    while (cur.node != NULL) {
         printf(" %c\n", iterator_fetch(&cur).value);
         cur = iterator_next(&cur);
     }
@@ -136,7 +160,11 @@ bool list_swap_elements(List * l, int k) {
     it_k->next = prev;
     prev->next = next->next;
     next->next = it_k;
-    prev_prev->next = next;
+    if (prev_prev != NULL) {
+        prev_prev->next = next;
+    } else {
+        l->head = next;
+    }
     
 
     return true;
